@@ -9,12 +9,15 @@ class App{
     {
         $url = $this->parseURL();
         
-        if(file_exists('../app/controllers/' . $url[0] . '.php')){
-            $this->controller = $url[0];
+        //controller
+        if (!empty($url[0]) && file_exists('../app/controllers/' . $url[0] . '.php')) {
+            require_once '../app/controllers/' . $url[0] . '.php'; // Memuat file controller
+            $this->controller = new $url[0]; // Inisialisasi objek controller
             unset($url[0]);
-        }
+        } 
+        
 
-        require_once '../app/controllers/' . $this->controller . ' .php';
+        require_once '../app/controllers/' . $this->controller . '.php';
         $this->controller = new $this->controller;
 
         //method
